@@ -1,0 +1,139 @@
+# ===========================================
+# ROOT PROJECT .GITIGNORE
+# ===========================================
+
+# ===========================================
+# LARAVEL BACKEND
+# ===========================================
+
+# Laravel specific
+/vendor/
+/public/build/
+/public/hot/
+/public/storage/
+/storage/*.key
+/storage/pail/
+/storage/logs/
+/storage/framework/cache/
+/storage/framework/sessions/
+/storage/framework/testing/
+/storage/framework/views/
+/bootstrap/cache/
+
+# Environment files (backend)
+.env
+.env.backup
+.env.production
+.env.local
+.env.development
+.env.testing
+
+# Logs
+*.log
+laravel.log
+storage/logs/*.log
+
+# Cache and temporary files
+.phpunit.result.cache
+.phpunit.cache/
+bootstrap/cache/*.php
+
+# IDE and Editor files
+/.fleet/
+/.idea/
+/.nova/
+/.vscode/
+/.zed/
+.phpactor.json
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Homestead
+Homestead.json
+Homestead.yaml
+auth.json
+
+# ===========================================
+# REACT FRONTEND
+# ===========================================
+
+# Dependencies (global - applies to both backend and frontend)
+/node_modules/
+
+# Frontend specific builds
+frontend/build/
+frontend/dist/
+
+# Frontend environment variables
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# Frontend specific files
+frontend/.pnp
+frontend/.pnp.js
+frontend/pids
+frontend/*.pid
+frontend/*.seed
+frontend/*.pid.lock
+frontend/coverage/
+frontend/.nyc_output
+frontend/.eslintcache
+frontend/.npm
+frontend/.node_repl_history
+frontend/*.tgz
+frontend/.yarn-integrity
+frontend/.cache
+frontend/.parcel-cache
+frontend/.next
+frontend/.nuxt
+frontend/.vuepress/dist
+frontend/.serverless
+frontend/.fusebox/
+frontend/.dynamodb/
+frontend/.tern-port
+
+# ===========================================
+# GENERAL DEVELOPMENT
+# ===========================================
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Database files
+*.sqlite
+*.db
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+
+# ===========================================
+# DOCKER (if using)
+# ===========================================
+docker-compose.override.yml
+.docker/
+
+# ===========================================
+# TESTING
+# ===========================================
+coverage/
+.nyc_output/
+test-results/
