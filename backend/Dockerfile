@@ -28,7 +28,7 @@ WORKDIR /var/www/html
 COPY . .
 
 # Install PHP dependencies AFTER copying the code
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --optimize-autoloader
 
 # Install Node & npm dependencies for Laravel Vite build (if using Vite)
 RUN apt-get update && apt-get install -y nodejs npm

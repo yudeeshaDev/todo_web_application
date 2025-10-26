@@ -8,6 +8,17 @@ use App\Models\Task;
 use Exception;
 use Illuminate\Http\Request;
 
+/**
+ * @OA\Info(
+ *     title="Todo API",
+ *     version="1.0.0",
+ *     description="API for managing tasks in the Todo application"
+ * )
+ * @OA\Server(
+ *     url="http://localhost:8000/api",
+ *     description="Development Server"
+ * )
+ */
 class TaskController extends Controller
 {
     //create new task
