@@ -11,7 +11,7 @@ Full-stack todo application with Laravel backend, React frontend, and MySQL data
 
 ### Setup (5 Steps)
 
-1. **Clone**
+1. **Clone and Navigate**
    ```bash
    git clone <your-repo-url>
    cd todo_web_app
@@ -20,7 +20,9 @@ Full-stack todo application with Laravel backend, React frontend, and MySQL data
 2. **Start Docker Desktop**
    - Open Docker Desktop, wait for green icon
 
-3. **Create Database**
+3. **Create Database** (in your terminal)
+   
+   **Option A: If you have MySQL installed locally:**
    ```bash
    mysql -u root -p
    CREATE DATABASE todo_app;
@@ -28,13 +30,22 @@ Full-stack todo application with Laravel backend, React frontend, and MySQL data
    GRANT ALL PRIVILEGES ON todo_app.* TO 'todo_user'@'localhost';
    FLUSH PRIVILEGES;
    ```
+   
+   **Option B: If MySQL command not found, use Docker MySQL instead:**
+   ```bash
+   # Skip this step and go to step 5
+   # The app will use Docker MySQL automatically
+   ```
 
-4. **Configure**
-   Edit `docker-compose.yml`, change these 2 lines in backend environment:
+4. **Configure** (edit the file)
+   
+   **If using local MySQL:** Open `docker-compose.yml`, change these 2 lines in backend environment:
    ```yaml
    - DB_HOST=host.docker.internal
    - DB_PASSWORD=your_password
    ```
+   
+   **If using Docker MySQL:** Skip this step - no changes needed!
 
 #### 5. Run the Application
 ```bash
