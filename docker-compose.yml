@@ -2,6 +2,7 @@ services:
   # MySQL Database
   mysql:
     image: mysql:8.0
+    container_name: todo_mysql
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: todo_app
@@ -15,6 +16,7 @@ services:
   # Laravel Backend API
   backend:
     build: ./backend
+    container_name: todo_backend
     ports:
       - "8000:80"
     environment:
@@ -29,6 +31,7 @@ services:
   # React Frontend
   frontend:
     build: ./frontend
+    container_name: todo_frontend
     ports:
       - "3000:80"
     depends_on:

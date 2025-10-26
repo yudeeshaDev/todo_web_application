@@ -13,25 +13,26 @@ A full-stack todo application with Laravel backend API and React frontend, fully
 
 ### Prerequisites
 
-- Docker Desktop installed and running
+- **Docker Desktop installed and running** (IMPORTANT!)
 - Git (to clone the repository)
 
-### 1. Clone the Repository
+### 1. Start Docker Desktop
+- Open Docker Desktop application
+- Wait for it to fully start (green icon in system tray)
 
+### 2. Clone and Navigate
 ```bash
 git clone <your-repo-url>
 cd todo_web_app
 ```
 
-### 2. Start the Application
-
+### 3. Start the Application
 ```bash
-# Build and start all containers
+# Build and start all 3 containers
 docker-compose up --build
 ```
 
-### 3. Access the Application
-
+### 4. Access the Application
 - **Frontend**: http://localhost:3000
 - **Backend API**: http://localhost:8000
 - **MySQL Database**: localhost:3306
@@ -200,9 +201,6 @@ todo_web_app/
 │   ├── public/
 │   ├── Dockerfile
 │   └── .dockerignore
-├── docker/                 # Docker configurations
-│   ├── mysql/
-│   └── nginx/
 ├── docker-compose.yml      # Main orchestration file
 ├── .dockerignore
 └── README.md

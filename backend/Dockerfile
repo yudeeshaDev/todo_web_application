@@ -46,6 +46,15 @@ RUN cp .env.example .env && php artisan key:generate --force
 # Build assets
 RUN npm run build
 
+# Configure Apache for Laravel
+RUN echo '<VirtualHost *:80>\n\
+    DocumentRoot /var/www/html/public\n\
+    <Directory /var/www/html/public>\n\
+        AllowOverride All\n\
+        Require all granted\n\
+    </Directory>\n\
+</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
+
 # Expose port
 EXPOSE 80
 
