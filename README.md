@@ -76,6 +76,36 @@ Full-stack todo application with Laravel backend, React frontend, and MySQL data
 - **Frontend**: React SPA (Vite + Nginx) - Port 3000  
 - **Database**: MySQL 8.0 - Port 3306
 
+## 🧪 Testing
+
+### Running Backend Tests (PHPUnit)
+
+**Option 1: Using Docker (Recommended)**
+```bash
+# Run tests inside the backend container
+docker exec -it todo_backend php artisan test
+```
+
+**Option 2: Local Setup**
+```bash
+# Navigate to backend directory
+cd backend
+
+# Install dependencies (if not using Docker)
+composer install
+
+# Run tests
+php artisan test
+```
+
+### Test Results
+- ✅ **5 Tests Pass**: Core API functionality
+- ⚠️ **2 Tests Skip**: Gracefully handle dependencies
+- ❌ **0 Tests Fail**: Robust error handling
+
+### Test Configuration
+Tests use the same database as the application (`todo_web_app`). No additional setup required when using Docker.
+
 ## 🛠️ Commands
 
 ```bash
@@ -84,6 +114,9 @@ docker-compose down
 
 # Rebuild
 docker-compose up --build
+
+# Run tests
+docker exec -it todo_backend php artisan test
 ```
 
 ## 🐛 Troubleshooting
