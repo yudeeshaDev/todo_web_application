@@ -68,12 +68,12 @@ const MainPage = () => {
     <div className="fade-in min-h-screen bg-gray-50">
       <div className="w-full px-6 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Add Task Form - 3 columns */}
+          
           <div className="lg:col-span-3 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
             <TaskForm onSubmit={handleAddTask} loading={formLoading} />
           </div>
           
-          {/* Recent Tasks - 9 columns */}
+        
           <div className="lg:col-span-9 bg-white rounded-lg shadow-sm border border-gray-200 p-6 flex flex-col">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-semibold text-gray-800">Recent Tasks</h2>

@@ -25,7 +25,8 @@ const TaskList = ({ tasks, onCompleteTask, loading = false, emptyMessage = "No t
         <TaskCard
           key={task.id}
           task={task}
-          onComplete={onCompleteTask}
+          onCompleteTask={onCompleteTask}
+          // No onDeleteTask prop - delete button won't show
         />
       ))}
     </div>

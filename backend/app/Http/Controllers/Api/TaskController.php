@@ -113,4 +113,23 @@ class TaskController extends Controller
             return ApiResponse::error('Failed to mark task as completed', 500, $e->getMessage());
         }
     }
+
+    //delete task
+    public function destroy($id)
+    {
+        try {
+            $task = Task::findOrFail($id);
+
+            if (!$task) {
+                return ApiResponse::notFound('Task not found');
+            }
+
+            $task->delete();
+
+            return ApiResponse::success(null, 'Task deleted successfully');
+
+        } catch (Exception $e) {
+            return ApiResponse::error('Failed to delete task', 500, $e->getMessage());
+        }
+    }
 }

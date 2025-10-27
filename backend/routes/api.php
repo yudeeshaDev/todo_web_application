@@ -15,4 +15,6 @@ Route::prefix('tasks')->group(function () {
     Route::get('/', [TaskController::class, 'index'])->name('tasks.index');
 
     Route::patch('/{id}/complete', [TaskController::class, 'markAsCompleted']);
+
+    Route::delete('/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 });

@@ -7,7 +7,7 @@ import './App.css';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gray-100">
+      <div className="min-h-screen">
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/all-tasks" element={<AllTasksPage />} />
