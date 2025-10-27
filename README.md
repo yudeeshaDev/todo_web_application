@@ -9,7 +9,7 @@ Full-stack todo application with Laravel backend, React frontend, and MySQL data
 - **Docker Desktop** (Download from [docker.com](https://www.docker.com/products/docker-desktop/))
 - **Git** (Download from [git-scm.com](https://git-scm.com/))
 
-### Setup (5 Steps)
+### Setup (Simple Steps)
 
 1. **Clone and Navigate**
    ```bash
@@ -20,41 +20,41 @@ Full-stack todo application with Laravel backend, React frontend, and MySQL data
 2. **Start Docker Desktop**
    - Open Docker Desktop, wait for green icon
 
-3. **Create Database** (in your terminal)
-   
-   **Option A: If you have MySQL installed locally:**
+3. **Build and Start Containers**
    ```bash
-   mysql -u root -p
-   CREATE DATABASE todo_app;
-   CREATE USER 'todo_user'@'localhost' IDENTIFIED BY 'your_password';
-   GRANT ALL PRIVILEGES ON todo_app.* TO 'todo_user'@'localhost';
-   FLUSH PRIVILEGES;
+   docker-compose up --build
    ```
-   
-   **Option B: If MySQL command not found, use Docker MySQL instead:**
+
+4. **Verify Containers are Running**
    ```bash
-   # Skip this step and go to step 5
-   # The app will use Docker MySQL automatically
+   docker ps
+   ```
+   You should see containers running for todo_mysql, todo_backend, and todo_frontend.
+
+5. **Test Database Connection**
+   ```bash
+   docker exec -it todo_mysql mysql -u todo_user -p
+   ```
+   - When prompted for password, type: `todo_password`
+   - Press Enter
+   - Type `exit` to leave MySQL
+
+6. **Create Docker Network**
+   ```bash
+   docker network create laravel-network
    ```
 
-4. **Configure** (edit the file)
-   
-   **If using local MySQL:** Open `docker-compose.yml`, change these 2 lines in backend environment:
-   ```yaml
-   - DB_HOST=host.docker.internal
-   - DB_PASSWORD=your_password
+7. **Run Database Migrations**
+   ```bash
+   docker exec -it todo_backend bash
    ```
-   
-   **If using Docker MySQL:** Skip this step - no changes needed!
+   - You'll see: `root@31add98b1e0e:/var/www/html#`
+   - Type: `php artisan migrate`
+   - Type: `exit` to leave the container
 
-#### 5. Run the Application
-```bash
-# Build and start all containers
-docker-compose up --build
-
-# Run database migrations
-docker-compose exec backend php artisan migrate
-```
+8. **Access Your Application**
+   - Open your browser and go to: http://localhost:3000
+   - Start adding your tasks!
 
 ### Access Your Application
 - **Frontend**: http://localhost:3000
