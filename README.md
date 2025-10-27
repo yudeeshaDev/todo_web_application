@@ -79,13 +79,6 @@ Full-stack todo application with Laravel backend, React frontend, and MySQL data
 ## 🛠️ Commands
 
 ```bash
-# View logs
-docker-compose logs -f
-
-# Run Laravel commands
-docker-compose exec backend php artisan migrate
-docker-compose exec backend php artisan tinker
-
 # Stop everything
 docker-compose down
 
@@ -95,11 +88,6 @@ docker-compose up --build
 
 ## 🐛 Troubleshooting
 
-**Port conflicts?**
-```bash
-netstat -ano | findstr :3000  # Windows
-netstat -tulpn | grep :3000   # Linux/Mac
-```
 
 **Database issues?**
 ```bash
@@ -136,9 +124,4 @@ todo_web_app/
 
 ---
 
-## 📚 API Documentation
-
-Once running, you can access:
-- Backend API: http://localhost:8000/api
-- Laravel routes: Check `backend/routes/api.php`
 
