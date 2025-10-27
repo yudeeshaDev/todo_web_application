@@ -104,7 +104,7 @@ php artisan test
 - ❌ **0 Tests Fail**: Robust error handling
 
 ### Test Configuration
-Tests use the same database as the application (`todo_web_app`). No additional setup required when using Docker.
+Tests use the same database as the application (`todo_app`). No additional setup required when using Docker.
 
 ## 🛠️ Commands
 
