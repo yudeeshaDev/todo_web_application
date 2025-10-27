@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import TaskForm from '../components/TaskForm';
 import TaskList from '../components/TaskList';
 import Message from '../components/Message';
+import { Button } from '../components/ui/button';
+import { ArrowRight } from 'lucide-react';
 import { taskAPI } from '../services/api';
 
 const MainPage = () => {
@@ -65,30 +67,32 @@ const MainPage = () => {
   };
 
   return (
-    <div className="fade-in min-h-screen bg-gray-50">
-      <div className="w-full px-6 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-6 sm:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
           
-          <div className="lg:col-span-3 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+          {/* Task Form */}
+          <div className="lg:col-span-4">
             <TaskForm onSubmit={handleAddTask} loading={formLoading} />
           </div>
           
-        
-          <div className="lg:col-span-9 bg-white rounded-lg shadow-sm border border-gray-200 p-6 flex flex-col">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-semibold text-gray-800">Recent Tasks</h2>
-              <button 
+          {/* Recent Tasks */}
+          <div className="lg:col-span-8">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+              <h2 className="text-xl sm:text-2xl font-semibold text-foreground">Recent Tasks</h2>
+              <Button 
                 onClick={handleViewAllTasks}
-                className="text-blue-600 hover:text-blue-800 hover:underline font-medium text-sm transition-colors"
+                className="flex items-center gap-2 w-full sm:w-auto bg-accent text-accent-foreground hover:bg-accent/80"
               >
                 View All Tasks
-              </button>
+                <ArrowRight className="w-4 h-4" />
+              </Button>
             </div>
             
             <Message message={message} type={messageType} />
             
             {/* Fixed height container for tasks */}
-            <div className="flex-1 overflow-y-auto max-h-96 custom-scrollbar">
+            <div className="overflow-y-auto max-h-80 sm:max-h-96 custom-scrollbar">
               <TaskList
                 tasks={tasks}
                 onCompleteTask={handleCompleteTask}

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TaskCardList from '../components/TaskCardList';
 import Message from '../components/Message';
+import { Button } from '../components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 import { taskAPI } from '../services/api';
 
 const AllTasksPage = () => {
@@ -38,14 +40,12 @@ const AllTasksPage = () => {
   };
 
   const handleDeleteTask = async (taskId) => {
-    if (window.confirm('Are you sure you want to delete this task?')) {
-      try {
-        await taskAPI.deleteTask(taskId);
-        showMessage('Task deleted successfully!', 'success');
-        await loadAllTasks();
-      } catch (error) {
-        showMessage('Error deleting task: ' + error.message, 'error');
-      }
+    try {
+      await taskAPI.deleteTask(taskId);
+      showMessage('Task deleted successfully!', 'success');
+      await loadAllTasks();
+    } catch (error) {
+      showMessage('Error deleting task: ' + error.message, 'error');
     }
   };
 
@@ -62,30 +62,33 @@ const AllTasksPage = () => {
   };
 
   return (
-   
-      <div className="w-full px-10 py-8">
-      
-          <div className="flex items-center justify-between mb-10">
-            <button 
-              onClick={handleBackToMain}
-              className="bg-blue-600 text-white px-5 py-2.5 rounded-md font-medium hover:bg-blue-700 transition-colors"
-            >
-              ← Back to Main
-            </button>
-            <h2 className="text-3xl font-semibold text-gray-800 flex-1 text-center">All Tasks</h2>
-          </div>
-          <Message message={message} type={messageType} />
-          <div className="w-full">
-            <TaskCardList
-              tasks={tasks}
-              onCompleteTask={handleCompleteTask}
-              onDeleteTask={handleDeleteTask}
-              loading={loading}
-              emptyMessage="No tasks to display."
-            />
-          </div>
+    <div className="h-screen bg-background overflow-hidden">
+      <div className="container mx-auto px-4 py-6 sm:py-8 h-full flex flex-col">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
+          <Button 
+            onClick={handleBackToMain}
+            className="flex items-center gap-2 w-full sm:w-auto bg-accent text-accent-foreground hover:bg-accent/80"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Main
+          </Button>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground text-center sm:text-left">All Tasks</h1>
+          <div className="hidden sm:block"></div> {/* Spacer for centering */}
+        </div>
+        
+        <Message message={message} type={messageType} />
+        
+        <div className="flex-1 overflow-hidden">
+          <TaskCardList
+            tasks={tasks}
+            onCompleteTask={handleCompleteTask}
+            onDeleteTask={handleDeleteTask}
+            loading={loading}
+            emptyMessage="No tasks to display."
+          />
+        </div>
       </div>
-   
+    </div>
   );
 };
 

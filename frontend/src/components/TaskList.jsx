@@ -1,21 +1,26 @@
 import React from 'react';
 import TaskCard from './TaskCard';
+import { Card, CardContent } from './ui/card';
 
 const TaskList = ({ tasks, onCompleteTask, loading = false, emptyMessage = "No tasks found" }) => {
   if (loading) {
     return (
-      <div className="text-center py-10 text-gray-600">
-        <p>Loading tasks...</p>
-      </div>
+      <Card>
+        <CardContent className="p-10 text-center">
+          <p className="text-muted-foreground">Loading tasks...</p>
+        </CardContent>
+      </Card>
     );
   }
 
   if (tasks.length === 0) {
     return (
-      <div className="text-center py-10 text-gray-600">
-        <h3 className="text-lg font-medium text-gray-400 mb-2">No tasks found</h3>
-        <p>{emptyMessage}</p>
-      </div>
+      <Card>
+        <CardContent className="p-10 text-center">
+          <h3 className="text-lg font-medium text-muted-foreground mb-2">No tasks found</h3>
+          <p className="text-muted-foreground">{emptyMessage}</p>
+        </CardContent>
+      </Card>
     );
   }
 
@@ -26,7 +31,7 @@ const TaskList = ({ tasks, onCompleteTask, loading = false, emptyMessage = "No t
           key={task.id}
           task={task}
           onCompleteTask={onCompleteTask}
-          // No onDeleteTask prop - delete button won't show
+          
         />
       ))}
     </div>

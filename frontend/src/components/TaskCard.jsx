@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Card, CardContent } from './ui/card';
+import { Button } from './ui/button';
+import { Badge } from './ui/badge';
+import { CheckCircle, Clock, Trash2 } from 'lucide-react';
+import DeleteConfirmDialog from './DeleteConfirmDialog';
 
 const TaskCard = ({ task, onCompleteTask, onDeleteTask }) => {
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
@@ -12,7 +19,6 @@ const TaskCard = ({ task, onCompleteTask, onDeleteTask }) => {
   };
 
   const getPriorityColor = (task) => {
-    // Simple priority logic based on creation date and completion status
     if (task.is_completed === 1) {
       return 'bg-green-500';
     }
@@ -30,78 +36,120 @@ const TaskCard = ({ task, onCompleteTask, onDeleteTask }) => {
     }
   };
 
+  const getPriorityVariant = (task) => {
+    if (task.is_completed === 1) {
+      return 'default';
+    }
+    
+    const createdDate = new Date(task.created_at);
+    const now = new Date();
+    const daysDiff = Math.floor((now - createdDate) / (1000 * 60 * 60 * 24));
+    
+    if (daysDiff > 7) {
+      return 'destructive';
+    } else if (daysDiff > 3) {
+      return 'secondary';
+    } else {
+      return 'outline';
+    }
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-3 flex-1">
-          {/* Checkbox */}
-          <div className="flex-shrink-0">
-            {task.is_completed === 1 ? (
-              <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-              </div>
-            ) : (
-              <div className="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
-            )}
-          </div>
-
-          {/* Task Content */}
-          <div className="flex-1 min-w-0">
-            <h3 className={`text-sm font-medium ${task.is_completed === 1 ? 'line-through text-gray-500' : 'text-gray-900'}`}>
-              {task.title}
-            </h3>
-            {task.description && (
-              <p className={`text-xs mt-1 ${task.is_completed === 1 ? 'text-gray-400' : 'text-gray-600'}`}>
-                {task.description}
-              </p>
-            )}
-          </div>
-
-          {/* Due Date */}
-          <div className="flex items-center text-xs text-gray-500 flex-shrink-0">
-            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            {formatDate(task.created_at)}
-          </div>
-
-          {/* Priority Indicator */}
-          <div className={`w-3 h-3 rounded-full ${getPriorityColor(task)} flex-shrink-0`}></div>
-        </div>
-
-        {/* Actions */}
-        <div className="flex items-center space-x-2 ml-4">
-          {task.is_completed !== 1 && (
-            <>
-              <button
-                onClick={() => onCompleteTask(task.id)}
-                className="text-green-600 hover:text-green-800 text-xs font-medium px-2 py-1 rounded hover:bg-green-50 transition-colors"
-              >
-                Mark Done
-              </button>
-              {onDeleteTask && (
-                <button
-                  onClick={() => onDeleteTask(task.id)}
-                  className="text-red-600 hover:text-red-800 text-xs font-medium px-2 py-1 rounded hover:bg-red-50 transition-colors"
-                >
-                  Delete
-                </button>
+    <Card className="hover:shadow-md transition-shadow">
+      <CardContent className="p-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div className="flex items-center space-x-3 flex-1 min-w-0">
+            {/* Checkbox */}
+            <div className="flex-shrink-0">
+              {task.is_completed === 1 ? (
+                <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                  <CheckCircle className="w-3 h-3 text-white" />
+                </div>
+              ) : (
+                <div className="w-5 h-5 border-2 border-muted-foreground rounded-full"></div>
               )}
-            </>
-          )}
-          {task.is_completed === 1 && (
-            <span className="text-xs text-gray-500 flex items-center">
-              <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-              Completed
-            </span>
-          )}
+            </div>
+
+            {/* Task Content */}
+            <div className="flex-1 min-w-0">
+              <h3 className={`text-sm font-medium ${
+                task.is_completed === 1 ? 'line-through text-muted-foreground' : 'text-foreground'
+              }`}>
+                {task.title}
+              </h3>
+              {task.description && (
+                <p className={`text-xs mt-1 ${
+                  task.is_completed === 1 ? 'text-muted-foreground' : 'text-muted-foreground'
+                }`}>
+                  {task.description}
+                </p>
+              )}
+            </div>
+
+            {/* Due Date - Hidden on small screens */}
+            <div className="hidden sm:flex items-center text-xs text-muted-foreground flex-shrink-0">
+              <Clock className="w-4 h-4 mr-1" />
+              {formatDate(task.created_at)}
+            </div>
+
+            {/* Priority Badge */}
+            <div className="flex-shrink-0 flex items-center">
+              <div className={`w-2 h-2 rounded-full ${getPriorityColor(task)}`}></div>
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="flex items-center justify-end sm:justify-start space-x-2 sm:ml-4">
+            {task.is_completed !== 1 && (
+              <>
+                <Button
+                  onClick={() => onCompleteTask(task.id)}
+                  size="sm"
+                  variant="outline"
+                  className="bg-green-50 text-green-700 border-green-200 hover:bg-green-100 hover:text-green-800"
+                >
+                  <CheckCircle className="w-3 h-3 mr-1" />
+                  <span className="hidden sm:inline">Mark Done</span>
+                </Button>
+                {onDeleteTask && (
+                  <Button
+                    onClick={() => setShowDeleteDialog(true)}
+                    size="sm"
+                    className="bg-red-50 text-red-700 border-red-200 hover:bg-red-100 hover:text-red-800"
+                  >
+                    <Trash2 className="w-3 h-3 mr-1" />
+                    {/* <span className="hidden sm:inline">Delete</span> */}
+                  </Button>
+                )}
+              </>
+            )}
+            {task.is_completed === 1 && (
+              <Badge className="text-xs bg-green-50 text-green-700 border-green-200">
+                <CheckCircle className="w-3 h-3 mr-1" />
+                Completed
+              </Badge>
+            )}
+          </div>
         </div>
-      </div>
-    </div>
+        
+        {/* Due Date - Show on small screens */}
+        <div className="flex sm:hidden items-center text-xs text-muted-foreground mt-2">
+          <Clock className="w-4 h-4 mr-1" />
+          {formatDate(task.created_at)}
+        </div>
+      </CardContent>
+      
+      {/* Delete Confirmation Dialog */}
+      <DeleteConfirmDialog
+        isOpen={showDeleteDialog}
+        onClose={() => setShowDeleteDialog(false)}
+        onConfirm={() => {
+          onDeleteTask(task.id);
+          setShowDeleteDialog(false);
+        }}
+        taskTitle={task.title}
+      />
+    </Card>
   );
 };
 
