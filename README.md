@@ -98,10 +98,11 @@ composer install
 php artisan test
 ```
 
-### Test Results
-- ✅ **5 Tests Pass**: Core API functionality
-- ⚠️ **2 Tests Skip**: Gracefully handle dependencies
-- ❌ **0 Tests Fail**: Robust error handling
+### Test Structure
+- **Unit Tests**: Test individual components (models) in isolation
+- **Feature Tests**: Test API endpoints and basic functionality
+- **Integration Tests**: Test complete workflows and system interactions
+
 
 ### Test Configuration
 Tests use the same database as the application (`todo_app`). No additional setup required when using Docker.
